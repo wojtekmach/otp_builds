@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  release:
+    types: [created, edited]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-10.15]
+    runs-on: ${{ matrix.os }}
+    env:
+      otp-ref: ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test OpenSSL
+        run: openssl version
+
+      - name: Build OTP
+        run: ./build_otp.sh ${{ env.otp-ref }} $PWD/release.tar.gz $(brew --prefix openssl)
+
+      - name: Test
+        run: tar xzf release.tar.gz && cd ${{ env.otp-ref }} && ./Install -minimal $PWD && ./bin/erl -version
+
+      - name: Upload tarball
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: release.tar.gz
+          asset_name: ${{ env.otp-ref }}-${{ runner.os }}.tar.gz
+          asset_content_type: application/gzip
