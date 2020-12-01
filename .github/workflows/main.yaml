@@ -20,10 +20,6 @@ jobs:
 
       - name: Build OTP
         run: ./build_otp.sh ${{ env.otp-ref }} $PWD/release.tar.gz $(brew --prefix openssl)
-
-      - name: Test
-        run: tar xzf release.tar.gz && cd ${{ env.otp-ref }} && ./Install -minimal $PWD && ./bin/erl -version
-
       - name: Upload tarball
         uses: actions/upload-release-asset@v1
         env:

@@ -17,3 +17,5 @@ A proof-of-concept that uses GitHub Actions to respond to release events, pre-co
 * The [workflow file](.github/workflows/main.yaml) can be easily customized to run on more macOS versions or even Linux. On the latter, remember to change the workflow file to use `/usr` as the SSL directory instead of homebrew one.
 
 * GitHub Actions `macos-10.15` is currently using old OpenSSL but it will be switched to 1.1.1 on 2020-12-14, see: <https://github.com/actions/virtual-environments/issues/2089>.
+
+* Currently files look like `OTP-23.1.4-macOS.tar.gz`, should they be like: `OTP-23.1.4-darwin-x86_64.tar.gz`?
