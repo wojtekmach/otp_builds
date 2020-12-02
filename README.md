@@ -1,5 +1,7 @@
 A proof-of-concept that uses GitHub Actions to respond to release events, pre-compile OTP, and attach it to the given release.
 
+See example release: <https://github.com/wojtekmach/otp_builds/releases/tag/OTP-23.1.4>.
+
 ## Notes
 
 * To test it on macOS, run:
