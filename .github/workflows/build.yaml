@@ -83,6 +83,7 @@ jobs:
           bash scripts/build_otp_macos.bash "${{ env.OTP_REF_NAME }}"
 
       - name: Set up Git credentials
+        if: false
         env:
           # This is a personal access token for user wojtekmach-erlef-bot that has write access.
           # We need a token with `workflows` permissions because by pushing git tags
@@ -95,6 +96,7 @@ jobs:
           echo "https://x-access-token:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
 
       - name: "Upload"
+        if: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
