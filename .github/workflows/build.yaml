@@ -106,16 +106,17 @@ jobs:
             ref_name="${OTP_REF_NAME}"
           fi
 
-          git remote add upstream https://github.com/erlang/otp
-          git fetch upstream
-          git tag $ref_name $OTP_REF --force
-          git push origin $ref_name --force
+          # TODO:
+          # git remote add upstream https://github.com/erlang/otp
+          # git fetch upstream
+          # git tag $ref_name $OTP_REF --force
+          # git push origin $ref_name --force
 
           gh release create \
             --repo ${{ github.repository }} \
             --title $ref_name \
             --notes "Automated build for https://github.com/erlang/otp/tree/${OTP_REF_NAME}" \
-            --target $ref_name \
+            --target b5893a3 \ # Initial commit
             $ref_name \
             || true
 
