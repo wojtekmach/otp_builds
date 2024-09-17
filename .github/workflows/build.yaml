@@ -112,13 +112,14 @@ jobs:
           # git tag $ref_name $OTP_REF --force
           # git push origin $ref_name --force
 
-          gh release create \
-            --repo ${{ github.repository }} \
-            --title $ref_name \
-            --notes "Automated build for https://github.com/erlang/otp/tree/${OTP_REF_NAME}" \
-            --target b5893a3 \ # Initial commit
-            $ref_name \
-            || true
+          if ! gh release view $ref_name; then
+            gh release create \
+              --repo ${{ github.repository }} \
+              --title $ref_name \
+              --notes "Automated build for https://github.com/erlang/otp/tree/${OTP_REF_NAME}" \
+              --target b5893a3 \ # Initial commit
+              $ref_name
+          fi
 
           tgz="$OTP_REF_NAME-macos-${{ matrix.pair.arch }}.tar.gz"
           tar czf $tgz --cd $OTP_DIR .
