@@ -83,7 +83,6 @@ jobs:
           bash scripts/build_otp_macos.bash "${{ env.OTP_REF_NAME }}"
 
       # - name: Set up Git credentials
-      #   if: false
       #   env:
       #     # This is a personal access token for user wojtekmach-erlef-bot that has write access.
       #     # We need a token with `workflows` permissions because by pushing git tags
@@ -112,11 +111,14 @@ jobs:
           # git push origin $ref_name --force
 
           if ! gh release view $ref_name; then
+            # Initial commit
+            target=b5893a3c3a8d0ab54be5d04de450b24d9e5aa149
+
             gh release create \
               --repo ${{ github.repository }} \
               --title $ref_name \
               --notes "Automated build for https://github.com/erlang/otp/tree/${OTP_REF_NAME}" \
-              --target b5893a3 \ # Initial commit
+              --target $target \
               $ref_name
           fi
 
